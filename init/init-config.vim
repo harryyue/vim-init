@@ -90,17 +90,20 @@ endif
 " 备份设置
 "----------------------------------------------------------------------
 
+" 禁用备份
+set nobackup
+
 " 允许备份
-set backup
+" set backup
 
 " 保存时备份
-set writebackup
+" set writebackup
 
 " 备份文件地址，统一管理
-set backupdir=~/.vim/tmp
+" set backupdir=~/.vim/tmp
 
 " 备份文件扩展名
-set backupext=.bak
+" set backupext=.bak
 
 " 禁用交换文件
 set noswapfile
@@ -109,7 +112,7 @@ set noswapfile
 set noundofile
 
 " 创建目录，并且忽略可能出现的警告
-silent! call mkdir(expand('~/.vim/tmp'), "p", 0755)
+" silent! call mkdir(expand('~/.vim/tmp'), "p", 0755)
 
 
 "----------------------------------------------------------------------

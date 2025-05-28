@@ -5,7 +5,8 @@
 " 所有人都能接受的配置，不掺渣任何 keymap, 和偏好设置
 "
 " Created by skywind on 2018/05/30
-" Last Modified: 2018/05/30 16:53:18
+" Last Update: 2018/05/30 16:53:18
+" Last modified by Harry.Yue on 2025/05/28
 "
 "======================================================================
 " vim: set ts=4 sw=4 tw=78 noet :
@@ -41,6 +42,20 @@ set ttimeoutlen=50
 " 显示光标位置
 set ruler
 
+" 高亮显示光标所在行列
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
+
+" 开启鼠标功能
+set mouse=a
+set mouse=c
+
+" 开启自动加载
+set autoread
+
+" 开启自动保存
+set autowrite
 
 "----------------------------------------------------------------------
 " 搜索设置
@@ -106,6 +121,9 @@ set display=lastline
 
 " 允许下方显示目录
 set wildmenu
+
+" 使用list:longest,full匹配模式
+set wildmode=list:longest,full
 
 " 延迟绘制（提升性能）
 set lazyredraw

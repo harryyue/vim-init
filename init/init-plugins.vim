@@ -3,7 +3,8 @@
 " init-plugins.vim - 
 "
 " Created by skywind on 2018/05/31
-" Last Modified: 2018/06/10 23:11
+" Last Update: 2018/06/10 23:11
+" Last modified by Harry.Yue on 2025/05/28
 "
 "======================================================================
 " vim: set ts=4 sw=4 tw=78 noet :
@@ -19,6 +20,56 @@ if !exists('g:bundle_group')
 	let g:bundle_group += ['leaderf']
 endif
 
+
+"----------------------------------------------------------------------
+" 将原来配置中的插件导入进来
+"----------------------------------------------------------------------
+" Bundle 'airblade/vim-gitgutter'
+" Bundle 'brookhong/cscope.vim'
+" Bundle 'jiangmiao/auto-pairs'
+" Bundle 'kien/ctrlp.vim'
+" Bundle 'luochen1990/rainbow'
+" Plugin 'mileszs/ack.vim'
+" Bundle 'msanders/snipmate.vim'
+" Bundle 'rib/vimgdb'
+" Bundle 'scrooloose/nerdtree'
+" Bundle 'scrooloose/nerdcommenter'
+" Bundle 'vim-scripts/genutils'
+" Bundle 'vim-scripts/lookupfile'
+" Bundle 'vim-utils/vim-man'
+" Bundle 'vim-scripts/OmniCppComplete'
+" Bundle 'vim-scripts/ctags.vim'
+" Bundle 'vim-scripts/winmanager'
+" Bundle 'yegappan/taglist'
+" Bundle 'yegappan/mru'
+" " Bundle 'christoomey/vim-run-interactive'
+" " Bundle 'croaky/vim-colors-github'
+" " Bundle 'danro/rename.vim'
+" " Bundle 'kchmck/vim-coffee-script'
+" " Bundle 'pbrisbin/vim-mkdir'
+" " Bundle 'scrooloose/syntastic'
+" " Bundle 'slim-template/vim-slim'
+" " Bundle 'thoughtbot/vim-rspec'
+" " Bundle 'tpope/vim-bundler'
+" " Bundle 'tpope/vim-endwise'
+" " Bundle 'tpope/vim-fugitive'
+" " Bundle 'tpope/vim-rails'
+" " Bundle 'tpope/vim-surround'
+" " Bundle 'vim-ruby/vim-ruby'
+" " Bundle 'vim-scripts/matchit.zip'
+" " Bundle 'vim-scripts/tComment'
+" " Bundle 'mattn/emmet-vim'
+" " Bundle 'Lokaltog/vim-powerline'
+" " Bundle 'godlygeek/tabular'
+" " Bundle 'jelera/vim-javascript-syntax'
+" " Bundle 'altercation/vim-colors-solarized'
+" " Bundle 'othree/html5.vim'
+" " Bundle 'xsbeats/vim-blade'
+" " Bundle 'Raimondi/delimitMate'
+" " Bundle 'groenewege/vim-less'
+" " Bundle 'evanmiller/nginx-vim-syntax'
+" " Bundle 'Lokaltog/vim-easymotion'
+" " Bundle 'tomasr/molokai'
 
 "----------------------------------------------------------------------
 " 计算当前 vim-init 的子路径
@@ -118,6 +169,25 @@ if index(g:bundle_group, 'basic') >= 0
 
 	" Git 支持
 	Plug 'tpope/vim-fugitive'
+
+	" vim中查看man
+	Plug 'vim-utils/vim-man'
+
+	" 括号自动配对
+	Plug 'jiangmiao/auto-pairs'
+
+	" 括号不同颜色显示
+	Plug 'luochen1990/rainbow'
+	let g:rainbow_active = 1
+	let g:rainbow_conf = {
+				\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+				\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+				\   'operators': '_,_',
+				\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+				\   'separately': {
+				\       '*': {},
+				\   }
+				\}
 
 	" 使用 ALT+E 来选择窗口
 	nmap <m-e> <Plug>(choosewin)
@@ -311,10 +381,16 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	let g:NERDTreeMinimalUI = 1
 	let g:NERDTreeDirArrows = 1
 	let g:NERDTreeHijackNetrw = 0
-	noremap <space>nn :NERDTree<cr>
-	noremap <space>no :NERDTreeFocus<cr>
-	noremap <space>nm :NERDTreeMirror<cr>
-	noremap <space>nt :NERDTreeToggle<cr>
+	let g:NERDTreeWinPos="left"
+	let g:NERDTreeWinSize=25
+	let g:NERDTreeShowLineNumbers=0
+	let g:NERDTreeHidden=1
+	let g:NERDTreeQuitOnOpen=1
+	" noremap <space>nn :NERDTree<cr>
+	" noremap <space>no :NERDTreeFocus<cr>
+	" noremap <space>nm :NERDTreeMirror<cr>
+	" noremap <space>nt :NERDTreeToggle<cr>
+	noremap <silent> <F3> :NERDTreeToggle<cr>
 endif
 
 
@@ -607,5 +683,4 @@ let g:ycm_filetype_whitelist = {
 			\ "zimbu":1,
 			\ "ps1":1,
 			\ }
-
 

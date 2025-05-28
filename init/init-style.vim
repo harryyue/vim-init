@@ -3,7 +3,8 @@
 " init-style.vim - 显示样式设置
 "
 " Created by skywind on 2018/05/30
-" Last Modified: 2018/05/30 20:29:07
+" Last Update: 2018/05/30 20:29:07
+" Last modified by Harry.Yue on 2025/05/28
 "
 "======================================================================
 " vim: set ts=4 sw=4 tw=78 noet :
@@ -38,6 +39,9 @@ set showcmd
 " 水平切割窗口时，默认在右边显示新窗口
 set splitright
 
+" 设置pop menu最大可显示的items为10，宽度为15
+set pumheight=10
+set pumwidth=15
 
 "----------------------------------------------------------------------
 " 颜色主题：色彩文件位于 colors 目录中
