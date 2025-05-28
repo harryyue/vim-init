@@ -167,6 +167,10 @@ if index(g:bundle_group, 'basic') >= 0
 	" 提供基于 TAGS 的定义预览，函数参数预览，quickfix 预览
 	Plug 'skywind3000/vim-preview'
 
+	" 提供terminal helper
+	Plug 'skywind3000/vim-terminal-help'
+	let g:terminal_cwd = 2
+
 	" Git 支持
 	Plug 'tpope/vim-fugitive'
 
