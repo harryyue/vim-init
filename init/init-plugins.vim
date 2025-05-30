@@ -1,6 +1,6 @@
 "======================================================================
 "
-" init-plugins.vim - 
+" init-plugins.vim -
 "
 " Created by skywind on 2018/05/31
 " Last Update: 2018/06/10 23:11
@@ -16,8 +16,8 @@
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
-	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
-	let g:bundle_group += ['leaderf']
+	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc', 'terminal']
+	let g:bundle_group += ['leaderf', 'keymap']
 endif
 
 
@@ -89,7 +89,7 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 
 
 "----------------------------------------------------------------------
-" 默认插件 
+" 默认插件
 "----------------------------------------------------------------------
 
 " 全文快速移动，<leader><leader>f{char} 即可触发
@@ -167,10 +167,6 @@ if index(g:bundle_group, 'basic') >= 0
 	" 提供基于 TAGS 的定义预览，函数参数预览，quickfix 预览
 	Plug 'skywind3000/vim-preview'
 
-	" 提供terminal helper
-	Plug 'skywind3000/vim-terminal-help'
-	let g:terminal_cwd = 2
-
 	" Git 支持
 	Plug 'tpope/vim-fugitive'
 
@@ -243,7 +239,7 @@ if index(g:bundle_group, 'enhanced') >= 0
 
 	" 提供 gist 接口
 	Plug 'lambdalisue/vim-gista', { 'on': 'Gista' }
-	
+
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
 	map <m-=> <Plug>(expand_region_expand)
 	map <m--> <Plug>(expand_region_shrink)
@@ -272,7 +268,7 @@ if index(g:bundle_group, 'tags') >= 0
 	let g:gutentags_cache_dir = expand('~/.cache/tags')
 
 	" 默认禁用自动生成
-	let g:gutentags_modules = [] 
+	let g:gutentags_modules = []
 
 	" 如果有 ctags 可执行就允许动态生成 ctags 文件
 	if executable('ctags')
@@ -349,7 +345,7 @@ if index(g:bundle_group, 'filetypes') >= 0
 	" rust 语法增强
 	Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-	" vim org-mode 
+	" vim org-mode
 	Plug 'jceb/vim-orgmode', { 'for': 'org' }
 endif
 
@@ -442,13 +438,13 @@ if index(g:bundle_group, 'ale') >= 0
 
 	" 编辑不同文件类型需要的语法检查器
 	let g:ale_linters = {
-				\ 'c': ['gcc', 'cppcheck'], 
-				\ 'cpp': ['gcc', 'cppcheck'], 
-				\ 'python': ['flake8', 'pylint'], 
-				\ 'lua': ['luac'], 
+				\ 'c': ['gcc', 'cppcheck'],
+				\ 'cpp': ['gcc', 'cppcheck'],
+				\ 'python': ['flake8', 'pylint'],
+				\ 'lua': ['luac'],
 				\ 'go': ['go build', 'gofmt'],
 				\ 'java': ['javac'],
-				\ 'javascript': ['eslint'], 
+				\ 'javascript': ['eslint'],
 				\ }
 
 
@@ -493,6 +489,23 @@ endif
 
 
 "----------------------------------------------------------------------
+" terminal：在vim中加入terminal，可以不退出vim使用命令行窗口
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'terminal') >= 0
+	" terminal helper 支持
+	Plug 'skywind3000/vim-terminal-help'
+	let g:terminal_cwd = 2
+	let g:terminal_height = 15
+
+	" floating terminal 支持
+	" Plug 'voldikss/vim-floaterm'
+	" let g:floaterm_keymap_toggle = '<m-->'
+	" noremap <m--> :FloatermToggle<cr>
+	" tnoremap <silent> <m--> <C-\><C-n>:FloatermToggle<CR>
+endif
+
+
+"----------------------------------------------------------------------
 " LeaderF：CtrlP / FZF 的超级代替者，文件模糊匹配，tags/函数名 选择
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'leaderf') >= 0
@@ -527,7 +540,7 @@ if index(g:bundle_group, 'leaderf') >= 0
 		" ui 定制
 		let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
-		" 如何识别项目目录，从当前文件目录向父目录递归知道碰到下面的文件/目录
+		" 如何识别项目目录，从当前文件目录向父目录递归直到碰到下面的文件/目录
 		let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 		let g:Lf_WorkingDirectoryMode = 'Ac'
 		let g:Lf_WindowHeight = 0.30
@@ -574,10 +587,10 @@ if index(g:bundle_group, 'leaderf') >= 0
 
 		" 模糊匹配忽略
 		let g:ctrlp_custom_ignore = {
-		  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-		  \ 'file': '\v\.(exe|so|dll|mp3|wav|sdf|suo|mht)$',
-		  \ 'link': 'some_bad_symbolic_links',
-		  \ }
+			\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+			\ 'file': '\v\.(exe|so|dll|mp3|wav|sdf|suo|mht)$',
+			\ 'link': 'some_bad_symbolic_links',
+			\ }
 
 		" 项目标志
 		let g:ctrlp_root_markers = ['.project', '.root', '.svn', '.git']
@@ -595,6 +608,64 @@ if index(g:bundle_group, 'leaderf') >= 0
 		" ALT+n 匹配 buffer
 		noremap <m-n> :CtrlPBuffer<cr>
 	endif
+endif
+
+
+"----------------------------------------------------------------------
+" keymap：加入keymap，方便快捷键记忆
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'keymap') >= 0
+	" vim-quickui 支持
+	Plug 'skywind3000/vim-quickui'
+
+	" vim-navigateor 支持(for keymaps)
+	Plug 'skywind3000/vim-navigator'
+
+	" initialize global keymap and declare prefix key
+	let g:navigator = {'prefix':'<tab><tab>'}
+
+	" buffer management
+	let g:navigator.b = {
+		\ 'name' : '+buffer' ,
+		\ '1' : [':b1'        , 'buffer 1'],
+		\ '2' : [':b2'        , 'buffer 2'],
+		\ '3' : [':b3'        , 'buffer 3'],
+		\ '4' : [':b4'        , 'buffer 4'],
+		\ '5' : [':b5'        , 'buffer 5'],
+		\ '6' : [':b6'        , 'buffer 6'],
+		\ 'd' : [':bd'        , 'delete-buffer'],
+		\ 'f' : [':bfirst'    , 'first-buffer'],
+		\ 'h' : [':Startify'  , 'home-buffer'],
+		\ 'l' : [':blast'     , 'last-buffer'],
+		\ 'n' : [':bnext'     , 'next-buffer'],
+		\ 'p' : [':bprevious' , 'previous-buffer'],
+		\ '?' : [':Leaderf buffer' , 'fzf-buffer'],
+		\ }
+
+	" tab management
+	let g:navigator.t = {
+		\ 'name': '+tab',
+		\ '1' : ['<key>1gt', 'tab-1'],
+		\ '2' : ['<key>2gt', 'tab-2'],
+		\ '3' : ['<key>3gt', 'tab-3'],
+		\ '4' : ['<key>4gt', 'tab-4'],
+		\ '5' : ['<key>5gt', 'tab-5'],
+		\ '6' : ['<key>6gt', 'tab-6'],
+		\ '7' : ['<key>7gt', 'tab-7'],
+		\ '8' : ['<key>8gt', 'tab-8'],
+		\ '9' : ['<key>9gt', 'tab-9'],
+		\ 'c' : [':tabnew' , 'new-tab'],
+		\ 'q' : [':tabclose','close-current-tab'],
+		\ 'n' : [':tabnext', 'next-tab'],
+		\ 'p' : [':tabprev', 'previous-tab'],
+		\ 'o' : [':tabonly', 'close-all-other-tabs'],
+		\ }
+
+	" Easymotion
+	let g:navigator.m = ['<plug>(easymotion-bd-w)', 'easy-motion-bd-w']
+	let g:navigator.n = ['<plug>(easymotion-s)', 'easy-motion-s']
+
+	nnoremap <silent><tab><tab> :Navigator g:navigator<cr>
 endif
 
 
@@ -633,16 +704,16 @@ let g:ycm_semantic_triggers =  {
 "----------------------------------------------------------------------
 " Ycm 白名单（非名单内文件不启用 YCM），避免打开个 1MB 的 txt 分析半天
 "----------------------------------------------------------------------
-let g:ycm_filetype_whitelist = { 
+let g:ycm_filetype_whitelist = {
 			\ "c":1,
-			\ "cpp":1, 
+			\ "cpp":1,
 			\ "objc":1,
 			\ "objcpp":1,
 			\ "python":1,
 			\ "java":1,
 			\ "javascript":1,
 			\ "coffee":1,
-			\ "vim":1, 
+			\ "vim":1,
 			\ "go":1,
 			\ "cs":1,
 			\ "lua":1,
