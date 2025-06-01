@@ -59,6 +59,9 @@ cnoremap <c-_> <c-k>
 "----------------------------------------------------------------------
 " <leader>+数字键 切换tab
 "----------------------------------------------------------------------
+" 设置空格键为<leader>键
+let mapleader="\<space>"
+
 noremap <silent><leader>1 1gt<cr>
 noremap <silent><leader>2 2gt<cr>
 noremap <silent><leader>3 3gt<cr>
@@ -184,9 +187,9 @@ inoremap <m-k> <c-\><c-o>gk
 cnoremap <m-h> <c-left>
 cnoremap <m-l> <c-right>
 
-" ALT+y 删除到行末
-noremap <m-y> d$
-inoremap <m-y> <c-\><c-o>d$
+" ALT+d 删除到行末
+noremap <m-d> d$
+inoremap <m-d> <c-\><c-o>d$
 
 
 "----------------------------------------------------------------------
@@ -236,25 +239,25 @@ let g:asyncrun_open = 6
 let g:asyncrun_bell = 1
 
 " 设置 F10 打开/关闭 Quickfix 窗口
-nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+nnoremap <silent> <F10> :call asyncrun#quickfix_toggle(6)<cr>
 
 " F9 编译 C/C++ 文件
-nnoremap <silent> <F9> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+" nnoremap <silent> <F9> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+
+" F8 运行项目
+" nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
+
+" F7 编译项目
+" nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <cr>
+
+" F6 测试项目
+" nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
 
 " F5 运行文件
 nnoremap <silent> <F5> :call ExecuteFile()<cr>
 
-" F7 编译项目
-nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <cr>
-
-" F8 运行项目
-nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
-
-" F6 测试项目
-nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
-
-" 更新 cmake
-nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
+" F4 更新 cmake
+" nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
 
 " Windows 下支持直接打开新 cmd 窗口运行
 if has('win32') || has('win64')
@@ -310,22 +313,22 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" F2 在项目目录下 Grep 光标下单词，默认 C/C++/Py/Js ，扩展名自己扩充
+" <leader>_f 在项目目录下 Grep 光标下单词，默认 C/C++/Py/Js ，扩展名自己扩充
 " 支持 rg/grep/findstr ，其他类型可以自己扩充
 " 不是在当前目录 grep，而是会去到当前文件所属的项目目录 project root
 " 下面进行 grep，这样能方便的对相关项目进行搜索
 "----------------------------------------------------------------------
 if executable('rg')
-	noremap <silent><F2> :AsyncRun! -cwd=<root> rg -n --no-heading 
+	noremap <silent><leader>f :AsyncRun! -cwd=<root> rg -n --no-heading 
 				\ --color never -g *.h -g *.c* -g *.py -g *.js -g *.vim 
 				\ <C-R><C-W> "<root>" <cr>
 elseif has('win32') || has('win64')
-	noremap <silent><F2> :AsyncRun! -cwd=<root> findstr /n /s /C:"<C-R><C-W>" 
+	noremap <silent><leader>f :AsyncRun! -cwd=<root> findstr /n /s /C:"<C-R><C-W>" 
 				\ "\%CD\%\*.h" "\%CD\%\*.c*" "\%CD\%\*.py" "\%CD\%\*.js"
 				\ "\%CD\%\*.vim"
 				\ <cr>
 else
-	noremap <silent><F2> :AsyncRun! -cwd=<root> grep -n -s -R <C-R><C-W> 
+	noremap <silent><leader>f :AsyncRun! -cwd=<root> grep -n -s -R <C-R><C-W> 
 				\ --include='*.h' --include='*.c*' --include='*.py' 
 				\ --include='*.js' --include='*.vim'
 				\ '<root>' <cr>

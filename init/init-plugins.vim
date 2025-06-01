@@ -243,6 +243,9 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
 	map <m-=> <Plug>(expand_region_expand)
 	map <m--> <Plug>(expand_region_shrink)
+
+	" ALT_f 用于开启flygrep的搜索功能
+	noremap <silent> <m-f> :FlyGrep<cr>
 endif
 
 
@@ -378,6 +381,9 @@ endif
 if index(g:bundle_group, 'nerdtree') >= 0
 	Plug 'scrooloose/nerdtree', {'on': ['NERDTree', 'NERDTreeFocus', 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind'] }
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+	Plug 'ryanoasis/vim-devicons'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+
 	let g:NERDTreeMinimalUI = 1
 	let g:NERDTreeDirArrows = 1
 	let g:NERDTreeHijackNetrw = 0
@@ -519,8 +525,8 @@ if index(g:bundle_group, 'leaderf') >= 0
 		" ALT+n 打开 buffer 模糊匹配
 		let g:Lf_ShortcutB = '<m-n>'
 
-		" CTRL+n 打开最近使用的文件 MRU，进行模糊匹配
-		noremap <c-n> :LeaderfMru<cr>
+		" <F4> 打开最近使用的文件 MRU，进行模糊匹配
+		noremap <F4> :LeaderfMru<cr>
 
 		" ALT+p 打开函数列表，按 i 进入模糊匹配，ESC 退出
 		noremap <m-p> :LeaderfFunction!<cr>
@@ -661,11 +667,32 @@ if index(g:bundle_group, 'keymap') >= 0
 		\ 'o' : [':tabonly', 'close-all-other-tabs'],
 		\ }
 
+	" window management
+	let g:navigator.w = {
+		\ 'name': '+window',
+		\ 'p' : [':wincmd p', 'jump-previous-window'],
+		\ 'h' : [':wincmd h', 'jump-left-window'],
+		\ 'j' : [':wincmd j', 'jump-belowing-window'],
+		\ 'k' : [':wincmd k', 'jump-aboving-window'],
+		\ 'l' : [':wincmd l', 'jump-right-window'],
+		\ 'x' : {
+		\		'name': '+management',
+		\		'o': ['wincmd o', 'close-other-windows'],
+		\	},
+		\ }
+
 	" Easymotion
 	let g:navigator.m = ['<plug>(easymotion-bd-w)', 'easy-motion-bd-w']
 	let g:navigator.n = ['<plug>(easymotion-s)', 'easy-motion-s']
 
 	nnoremap <silent><tab><tab> :Navigator g:navigator<cr>
+
+	" Virtual mode setting
+	let g:keymap_visual = {'prefix':'<tab><tab>'}
+	let g:keymap_visual['='] = ['<key>=', 'indent-block']
+	let g:keymap_visual.q = ['<key>gq', 'format-block']
+
+	vnoremap <silent><tab><tab> :NavigatorVisual *:keymap_visual<cr>
 endif
 
 
