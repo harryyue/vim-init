@@ -49,5 +49,7 @@ LoadScript init/init-style.vim
 " 自定义按键
 LoadScript init/init-keymaps.vim
 
-
-
+" 在顶层目录中的.releated_source_code_tags文件中，加入相关联的tags路径
+if filereadable(expand(".releated_source_code_tags"))
+	  source .releated_source_code_tags
+endif
