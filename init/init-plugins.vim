@@ -373,6 +373,16 @@ if index(g:bundle_group, 'filetypes') >= 0
 	" rust 语法增强
 	Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
+	" dst 文件语法高亮
+	"Plug 'goldie-lin/vim-dts', { 'for': 'dts' }
+	autocmd BufRead,BufNewFile *.dts,*.dtsi set filetype=dts
+
+	" yocto bitbake文件语法支持
+	Plug 'kergoth/vim-bitbake', { 'for': 'bitbake' }
+	Plug 'cespare/vim-toml', { 'for': 'bitbake'  }      " 支持 TOML 文件，BitBake 配置文件有时使用 TOML 格式
+	Plug 'stevearc/vim-arduino', { 'for': 'bitbake'  }  " 可能包含对 BitBake 的支持，尽管主要是针对 Arduino 的配置文件
+	autocmd BufNewFile,BufRead *.bb,*.bbclass set filetype=bitbake
+
 	" vim org-mode
 	Plug 'jceb/vim-orgmode', { 'for': 'org' }
 endif
