@@ -232,6 +232,9 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" 使用 :FlyGrep 命令进行实时 grep
 	Plug 'wsdjeg/FlyGrep.vim'
 
+	" 提供ack插件
+	Plug 'mileszs/ack.vim'
+
 	" 使用 :CtrlSF 命令进行模仿 sublime 的 grep
 	Plug 'dyng/ctrlsf.vim'
 
@@ -247,6 +250,27 @@ if index(g:bundle_group, 'enhanced') >= 0
 
 	" ALT_f 用于开启flygrep的搜索功能
 	noremap <silent> <m-f> :FlyGrep<cr>
+
+	" Use ag as ack's search engine
+	if executable('ag')
+		let g:ackprg = 'ag --vimgrep'
+	endif
+
+	" 新增'Todo'与'Debug'命令，用于快速查找特定字符
+	command Todo Ack! ' TODO:| FIXME:| HACK:| BUG:| CHANGED:'
+	command Debug Ack! ' NOTE:| INFO:| IDEA:'
+
+	" 新增<F8>与<F9>开始调出Todo与Debug标签
+	nnoremap <silent> <F8> :Todo<cr>
+	nnoremap <silent> <F9> :Debug<cr>
+	
+	if has('autocmd')
+		" 高亮TODO,FIXME, NOTE等字符
+		if v:version > 701
+			autocmd Syntax * call matchadd('Todo','TODO:\|FIXME:\|HACK:\|BUG:\|CHANGED:)')
+			autocmd Syntax * call matchadd('Debug','NOTE:\| INFO:\| IDEA:')
+		endif
+	endif
 endif
 
 
