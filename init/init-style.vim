@@ -132,9 +132,10 @@ augroup END
 " 2: 1 - filename.txt
 " 3: [1] filename.txt
 "----------------------------------------------------------------------
-if has('gui_running')
-	let g:config_vim_tab_style = 3
-endif
+let g:config_vim_tab_style = 3
+"if has('gui_running')
+"	let g:config_vim_tab_style = 3
+"endif
 
 
 "----------------------------------------------------------------------
@@ -222,14 +223,14 @@ function! Vim_NeatTabLabel(n)
 	if style == 0
 		return l:fname
 	elseif style == 1
-		return "[".l:num."] ".l:fname
+		return "[".l:num."]".l:fname
 	elseif style == 2
-		return "".l:num." - ".l:fname
+		return "".l:num."-".l:fname
 	endif
 	if getbufvar(l:bufnr, '&modified')
-		return "[".l:num."] ".l:fname." +"
+		return "+ [".l:num."]".l:fname
 	endif
-	return "[".l:num."] ".l:fname
+	return "[".l:num."]".l:fname
 endfunc
 
 
